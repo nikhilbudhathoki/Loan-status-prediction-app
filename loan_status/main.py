@@ -1,58 +1,70 @@
-import streamlit as st
-import requests
+import streamlit as st#streamlit for frontend 
+import requests#requests for http request
+
+
+
 
 # Function to send input data to the Flask API for prediction
 def predict_loan(input_data):
     # Prepare the data payload
     data = {"input_data": input_data}
     
-    # Define the Flask API endpoint
+    # api url from render to deploy and use flask as backend
     api_url = "https://my-flask-api-6o67.onrender.com/predict"  # Use the Render URL of your Flask API
     
     try:
-        # Send the data to the Flask API and get the response
+        # Send the post request data to the Flask API and get the response
         response = requests.post(api_url, json=data)
         response.raise_for_status()  # Raise an error for bad status codes
         
-        # Interpret the result
+        # result  got or error if key has problem
         result = response.json().get("status", "Error: No response from the API")
     
-    except requests.exceptions.RequestException as e:
-        st.error(f"Error contacting the API: {e}")
+    except requests.exceptions.RequestException as e:#exection for error
+        st.error(f"Error contacting the API: {e}")#excepiton due to api and network
         result = "Error: Unable to contact the prediction server"
     
     return result
 
-# Streamlit main function
+
+
+
+# Streamlit main function for frontend
 def main():
     # Sidebar
-    st.sidebar.title("Bank Loan Predictor")
+    st.sidebar.title("Bank Loan Predictor")#title of sidebar
     st.sidebar.write("---")  # A line separator for better design
 
-    # Create a stylish button-like navigation using markdown
-    page = st.sidebar.radio("", ["Main Model", "Model Info", "About"], index=0, format_func=lambda x: f'**{x}**')
+    # Creating pages for each about,main model and about model
+    page = st.sidebar.radio("", ["Main Model", "Model Info", "About"], index=0, format_func=lambda x: f'**{x}**')# Creates a radio button selection in the sidebar for navigation between pages. The format_func makes the text bold.
 
-    if page == "Main Model":
-        st.title("🏦 Loan Approval Prediction Webpage")
-        st.write("Fill out the form below to see if your loan application will be approved.")
+
+
+    if page == "Main Model":#if main model is selected from side bar
+        st.title("🏦 Loan Approval Prediction Webpage")#title for main model page
+        st.write("Fill out the form below to see if your loan application will be approved.")#text for main model
         
-        with st.form(key='loan_form'):
-            Gender = st.selectbox("Gender:", ["Male", "Female"], help="Select your gender.")
+
+
+        with st.form(key='loan_form'):#using form for the model implementation
+            Gender = st.selectbox("Gender:", ["Male", "Female"], help="Select your gender.")#less option so make them in select box 
             Married = st.selectbox("Marital Status:", ["Yes", "No"], help="Are you married?")
             Dependents = st.selectbox("Dependents:", ["0", "1", "2", "3+"], help="Number of dependents.")
             Education = st.selectbox("Education Level:", ["Graduate", "Not Graduate"], help="Highest level of education.")
             Self_Employed = st.selectbox("Self Employed:", ["Yes", "No"], help="Are you self-employed?")
             
-            ApplicantIncome = st.number_input("Applicant's Income:", min_value=0, help="Enter your income in USD.", step=100)
+            
+            #more option or continous value
+            ApplicantIncome = st.number_input("Applicant's Income:", min_value=0, help="Enter your income in USD.", step=100)#step increase the value by 100 in upclick or down by click
             CoapplicantIncome = st.number_input("Coapplicant's Income:", min_value=0, help="Enter the income of the coapplicant in USD.", step=100)
             LoanAmount = st.number_input("Loan Amount Requested:", min_value=0, help="Enter the loan amount you are requesting in USD.", step=1000)
             Loan_Amount_Term = st.number_input("Loan Amount Term (months):", min_value=0, max_value=480, value=360, help="Enter the loan repayment term in months.")
             Credit_History = st.selectbox("Credit History:", [1.0, 0.0], help="Select your credit history status. 1.0 for good history, 0.0 for bad.")
             Property_Area = st.selectbox("Property Area:", ["Urban", "Semiurban", "Rural"], help="Select the area where the property is located.")
             
-            submit_button = st.form_submit_button(label='Check Loan Status')
+            submit_button = st.form_submit_button(label='Check Loan Status')#label for output
         
-        if submit_button:
+        if submit_button:#encoding it for the model to understand
             input_data = [
                 1 if Gender == "Male" else 0,
                 1 if Married == "Yes" else 0,
@@ -72,6 +84,11 @@ def main():
             
             # Display the prediction result with style
             st.markdown(f"## {result}")
+            
+            
+            
+            
+            ##another page  for the information of model
 
     elif page == "Model Info":
         st.title("Model Information")
@@ -110,6 +127,10 @@ def main():
         - **Applicant:** The primary person applying for the loan.
         - **Credit History:** A record of your ability to repay debts and demonstrated responsibility in repaying loans.
         """)
+        
+        
+        
+        #last about page
 
     elif page == "About":
         st.title("About This Application")
