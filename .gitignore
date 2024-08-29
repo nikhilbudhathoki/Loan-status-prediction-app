@@ -1,0 +1,23 @@
+# Python bytecode
+*.pyc
+__pycache__/
+
+# Environment variables
+.env
+
+# macOS-specific files
+.DS_Store
+
+# Log files
+*.log
+
+# Virtual environment
+venv/
+env/
+
+# IDE or editor settings
+.vscode/
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
