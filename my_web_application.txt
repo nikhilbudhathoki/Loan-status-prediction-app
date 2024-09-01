@@ -1,2 +1,2 @@
-Loan_status_prediction_web_app:
+Loan_status_prediction_web_app_link(deployed at render):
 https://my-streamlit-app.onrender.com/
