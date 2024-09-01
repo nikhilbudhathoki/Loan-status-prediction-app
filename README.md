@@ -39,7 +39,7 @@ Running the Application:
    - View `flask1.py` for the Flask API code.
    - Start the Flask server:
      python flask1.py
-   - API accessible at http://127.0.0.1:10000/predict
+   - API accessible by streamlit deployed dockerimage
 
 2. Run Streamlit App:
    - Navigate to the Streamlit folder:
@@ -47,7 +47,8 @@ Running the Application:
    - View `main.py` for the Streamlit code.
    - Start the Streamlit app:
      streamlit run main.py
-   - Access the app at http://localhost:8501
+   - Access the app https://my-streamlit-app.onrender.com/
+   - Rest API for streamlit is given by flask API
 
 Using the Application:
 1. Open the Streamlit app in your browser.
